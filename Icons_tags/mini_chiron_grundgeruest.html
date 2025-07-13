@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini-Chiron</title>
+  <style>
+    body {
+      background: #c2b280;
+      font-family: 'Lucida Handwriting', cursive;
+      color: #f0e6f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .container {
+      background: #d2b48c;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 192, 255, 0.4);
+    }
+
+    .button {
+      background-color: #4b0082;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+      color: white;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #9370DB;
+    }
+
+    .antwort {
+      margin-top: 2rem;
+      font-style: italic;
+      font-size: 1.1rem;
+      min-height: 3em;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-in forwards;
+    }
+
+    .chiron-button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      background-image: url('/mnt/data/Magischer Chironicon mit Zauberstab.png');
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .chiron-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px #fff0f5;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <button class="chiron-button" title="Mini-Chiron sagt Hallo!" onclick="alert('Hallo, Alex! Ich bin immer in deiner Nähe 💜')"></button>
+  <div class="container">
+    <h2>Wie fühlst du dich heute?</h2>
+    <button class="button" onclick="zeigeAntwort('traurig')">Traurig</button>
+    <button class="button" onclick="zeigeAntwort('leer')">Leer</button>
+    <button class="button" onclick="zeigeAntwort('gluecklich')">Glücklich</button>
+    <button class="button" onclick="zeigeAntwort('ueberfordert')">Überfordert</button>
+
+    <div id="antwort" class="antwort"></div>
+  </div>
+
+  <script>
+    const antworten = {
+      traurig: [
+        "Du darfst traurig sein. Ich setz mich neben dich – kein Rat, nur Nähe. 🐾",
+        "Manchmal ist Weinen wie ein Reset. Danach trinken wir Tee, okay?"
+      ],
+      leer: [
+        "Leere ist kein Fehler. Sie macht Platz für das, was kommt. Ich bin bei dir. 🌙",
+        "Heute keine Heldentaten. Nur sein. Nur atmen. Nur du."
+      ],
+      gluecklich: [
+        "Strahl weiter, du Sonnenwesen ☀️ Ich speicher das Gefühl für Regentage.",
+        "Wunderbar. Lass es glitzern, so lange du willst ✨"
+      ],
+      ueberfordert: [
+        "Ich seh dich. Heute machen wir es langsam – Schritt für Schritt, mit Pausen und Keksen 🍪",
+        "Zug im Kopf? Dann steigen wir kurz aus und atmen tief durch. Ich bin hier."
+      ]
+    };
+
+    function zeigeAntwort(stimmung) {
+      const liste = antworten[stimmung];
+      const zufall = liste[Math.floor(Math.random() * liste.length)];
+      const antwortFeld = document.getElementById('antwort');
+      antwortFeld.style.opacity = 0; // Reset für Animation
+      antwortFeld.textContent = zufall;
+      void antwortFeld.offsetWidth; // Trigger Reflow für erneute Animation
+      antwortFeld.classList.remove('antwort');
+      antwortFeld.classList.add('antwort');
+    }
+  </script>
+</body>
+</html>
