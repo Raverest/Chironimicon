@@ -7,7 +7,7 @@
     body {
       background: #c2b280;
       font-family: 'Lucida Handwriting', cursive;
-      color: #f0e6f6;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -43,11 +43,20 @@
       box-shadow: 0 0 10px #9370DB;
     }
 
-    .antwort {
+    .rahmen {
       margin-top: 2rem;
+      padding: 1rem;
+      border: none;
+      border-radius: 1rem;
+      background-image: url('https://raw.githubusercontent.com/Raverest/Chironimicon/main/Icons_tags/rahmen.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 200px;
+    }
+
+    .antwort {
       font-style: italic;
       font-size: 1.1rem;
-      min-height: 3em;
       opacity: 0;
       animation: fadeIn 0.8s ease-in forwards;
     }
@@ -56,15 +65,20 @@
       position: absolute;
       top: 1rem;
       left: 1rem;
-      width: 50px;
-      height: 50px;
+      width: 100px;
+      height: 100px;
       border: none;
       border-radius: 50%;
+<<<<<<< HEAD
+      background-image: url('https://raw.githubusercontent.com/Raverest/Chironimicon/main/Icons_tags/Chironbutton.png');
+=======
       background-image: url('https://github.com/Raverest/Chironimicon/blob/main/Icons_tags/Chironbutton.png');
+>>>>>>> b021e0397ad1a9627d466ca9c66be645326da937
       background-size: cover;
       background-position: center;
       cursor: pointer;
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+      border: 2px solid white;
     }
 
     .chiron-button:hover {
@@ -76,6 +90,11 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -86,8 +105,11 @@
     <button class="button" onclick="zeigeAntwort('leer')">Leer</button>
     <button class="button" onclick="zeigeAntwort('gluecklich')">Glücklich</button>
     <button class="button" onclick="zeigeAntwort('ueberfordert')">Überfordert</button>
-
-    <div id="antwort" class="antwort"></div>
+    <button class="button" onclick="zeigeTagesbotschaft()">Tagesbotschaft anzeigen</button>
+    <div class="rahmen">
+      <div id="antwort" class="antwort"></div>
+      <div id="tagesbotschaft" class="antwort"></div>
+    </div>
   </div>
 
   <script>
@@ -114,11 +136,38 @@
       const liste = antworten[stimmung];
       const zufall = liste[Math.floor(Math.random() * liste.length)];
       const antwortFeld = document.getElementById('antwort');
-      antwortFeld.style.opacity = 0; // Reset für Animation
+      antwortFeld.style.opacity = 0;
       antwortFeld.textContent = zufall;
-      void antwortFeld.offsetWidth; // Trigger Reflow für erneute Animation
+      void antwortFeld.offsetWidth;
       antwortFeld.classList.remove('antwort');
       antwortFeld.classList.add('antwort');
+    }
+
+    const tagesbotschaften = [
+      "Du darfst heute freundlich mit dir selbst sein. Ohne Wenn und Aber.",
+      "Dein Wert hängt nicht davon ab, wie produktiv du bist. Du bist genug.",
+      "Heute darfst du atmen, ruhen, träumen – ohne Schuldgefühl.",
+      "Manchmal ist der sanfte Weg der mutigste. Geh ihn mit mir.",
+      "Du bist nicht zu viel. Du bist genau richtig – immer schon."
+    ];
+
+    function zeigeTagesbotschaft() {
+      const zufall = tagesbotschaften[Math.floor(Math.random() * tagesbotschaften.length)];
+      const feld = document.getElementById('tagesbotschaft');
+      feld.style.opacity = 0;
+      feld.textContent = zufall;
+      void feld.offsetWidth;
+      feld.classList.remove('antwort');
+      feld.classList.add('antwort');
+
+      // Nach 15 Sekunden ausblenden
+      setTimeout(() => {
+        feld.style.animation = 'fadeOut 1s ease-out forwards';
+        setTimeout(() => {
+          feld.textContent = "";
+          feld.style.opacity = 0;
+        }, 1000);
+      }, 15000);
     }
   </script>
 </body>
